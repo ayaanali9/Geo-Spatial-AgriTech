@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1q26csZBcc_Hcv5KeJKKTnQtuh8yTREaQ
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import ee
 import geemap
 
