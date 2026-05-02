@@ -19,7 +19,8 @@ from google.oauth2 import service_account
 try:
     if os.path.exists('ee-key.json'):
         credentials = service_account.Credentials.from_service_account_file('ee-key.json')
-        ee.Initialize(credentials, project='gen-lang-client-0942350792')
+        scoped_credentials = credentials.with_scopes(['https://www.googleapis.com/auth/earthengine'])
+        ee.Initialize(scoped_credentials, project='gen-lang-client-0942350792')
     else:
         ee.Initialize(project='gen-lang-client-0942350792')
     print("Earth Engine Initialized Successfully!")
@@ -128,7 +129,8 @@ PORT = int(os.environ.get('PORT', 5000))
 try:
     if os.path.exists('ee-key.json'):
         credentials = service_account.Credentials.from_service_account_file('ee-key.json')
-        ee.Initialize(credentials, project='gen-lang-client-0942350792')
+        scoped_credentials = credentials.with_scopes(['https://www.googleapis.com/auth/earthengine'])
+        ee.Initialize(scoped_credentials, project='gen-lang-client-0942350792')
     else:
         ee.Initialize(project='gen-lang-client-0942350792')
     print("Earth Engine Initialized Successfully!")
