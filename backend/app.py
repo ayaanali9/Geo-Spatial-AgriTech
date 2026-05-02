@@ -107,18 +107,12 @@ else:
     except Exception as e:
         print(f"❌ Technical Error aa gaya. Details: {e}")
 
-# 1. Necessary installations for our Agri-Tech API
-!pip install flask flask-cors -q
-!npm install -g localtunnel
-
+import os
 import ee
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import threading
-import random
 
-# Picking a random port to avoid the 'Address already in use' ghost error
-PORT = random.randint(6000, 9000)
+PORT = int(os.environ.get('PORT', 5000))
 
 # Authenticating with Google Earth Engine using my project credentials
 try:
@@ -191,17 +185,5 @@ def check_fasal():
         print("Backend Error Details:", str(e))
         return jsonify({"status": "error", "message": "Backend Error, check Colab terminal for logs!"})
 
-# 3. Starting the background thread for our API server
-def run_app():
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT)
-
-threading.Thread(target=run_app).start()
-
-# 4. Exposing our local server to the internet using Localtunnel
-print("\n" + "="*60)
-print(f"⏳ Starting backend on Port ({PORT})...")
-print("👇 Copy the URL below (ending in .loca.lt)!")
-print("="*60 + "\n")
-
-# Use a simple string for the shell command to prevent bash syntax errors
-!npx localtunnel --port {PORT}
