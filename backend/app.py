@@ -10,12 +10,19 @@ Original file is located at
 import ee
 import geemap
 
+import os
+from google.oauth2 import service_account
+
 # 1. Google Server connection (Auth)
 try:
-    ee.Initialize(project='gen-lang-client-0942350792')
-except:
-    ee.Authenticate()
-    ee.Initialize(project='gen-lang-client-0942350792')
+    if os.path.exists('ee-key.json'):
+        credentials = service_account.Credentials.from_service_account_file('ee-key.json')
+        ee.Initialize(credentials, project='gen-lang-client-0942350792')
+    else:
+        ee.Initialize(project='gen-lang-client-0942350792')
+    print("Earth Engine Initialized Successfully!")
+except Exception as e:
+    print("Earth Engine Auth Error:", str(e))
 
 # 2. My Area (Tajpura, Saharanpur)
 tajpura_center = [77.585, 29.957]
@@ -109,6 +116,7 @@ else:
 
 import os
 import ee
+from google.oauth2 import service_account
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -116,10 +124,14 @@ PORT = int(os.environ.get('PORT', 5000))
 
 # Authenticating with Google Earth Engine using my project credentials
 try:
-    ee.Initialize(project='gen-lang-client-0942350792')
-except:
-    ee.Authenticate()
-    ee.Initialize(project='gen-lang-client-0942350792')
+    if os.path.exists('ee-key.json'):
+        credentials = service_account.Credentials.from_service_account_file('ee-key.json')
+        ee.Initialize(credentials, project='gen-lang-client-0942350792')
+    else:
+        ee.Initialize(project='gen-lang-client-0942350792')
+    print("Earth Engine Initialized Successfully!")
+except Exception as e:
+    print("Earth Engine Auth Error:", str(e))
 
 # 2. Setting up the Flask server so our React frontend can send khet coordinates
 app = Flask(__name__)
