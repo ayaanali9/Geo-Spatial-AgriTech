@@ -72,7 +72,7 @@ function App() {
 
     try {
       // Tera live Colab API Link
-      const apiUrl = "https://nine-clouds-retire.loca.lt/check_fasal";
+      const apiUrl = "https://geo-spatial-agritech.onrender.com/check_fasal";
       
       const response = await fetch(apiUrl, {
         method: "POST",
