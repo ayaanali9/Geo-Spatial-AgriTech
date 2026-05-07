@@ -4,12 +4,25 @@ import 'leaflet/dist/leaflet.css';
 import '@geoman-io/leaflet-geoman-free';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 
-// Nayi Search Library Imports
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet-geosearch/dist/geosearch.css';
 import './App.css';
 
-// 1. NAYA COMPONENT: Search Box (Map ke upar)
+// Navbar Component
+function Navbar() {
+  return (
+    <nav className="glass-navbar">
+      <div className="nav-logo">🌾 Kisan Space Tech</div>
+      <ul className="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  );
+}
+
+// 1. Search Box
 function SearchField() {
   const map = useMap();
   
@@ -17,10 +30,10 @@ function SearchField() {
     const provider = new OpenStreetMapProvider();
     const searchControl = new GeoSearchControl({
       provider: provider,
-      style: 'bar', // Map ke upar ek professional search bar aayegi
-      showMarker: false, // Marker nahi chahiye, sirf wahan zoom karna hai
+      style: 'bar',
+      showMarker: false,
       showPopup: false,
-      autoClose: true, // Search ke baad box khud band ho jayega
+      autoClose: true,
       retainZoomLevel: false,
       animateZoom: true,
       keepResult: false,
@@ -34,7 +47,7 @@ function SearchField() {
   return null;
 }
 
-// 2. Draw Tools Component (Tera purana boundary wala tool)
+// 2. Draw Tools
 function DrawTools({ setFarmCoords }) {
   const map = useMap();
   
@@ -57,7 +70,7 @@ function DrawTools({ setFarmCoords }) {
 
 // 3. Main App Component
 function App() {
-  const mapCenter = [29.957, 77.585]; // Default Location
+  const mapCenter = [29.9695, 77.5510]; // Tajpura, Saharanpur
   const [farmCoords, setFarmCoords] = useState(null);
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
@@ -72,7 +85,6 @@ function App() {
     setReport(null);
 
     try {
-      // Tera live Render API Link
       const apiUrl = "https://geo-spatial-agritech.onrender.com/check_fasal";
       
       const response = await fetch(apiUrl, {
@@ -99,55 +111,74 @@ function App() {
   };
 
   return (
-    <div className="main-container">
-      {/* Background Video */}
+    <>
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Background Video (Fixed) */}
       <video autoPlay loop muted playsInline className="background-video">
         <source src="/satellite-bg.mp4" type="video/mp4" />
       </video>
 
-      <div className="glass-card">
-        <h1 className="main-title">🌾 Kisan Space Tech</h1>
-        <p className="subtitle">
-          Map par apne khet ki boundary banayein aur live health check karein.
-        </p>
-
-        {/* MAP BOX */}
-        <div className="map-wrapper">
-          <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
-            <TileLayer
-              url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-              attribution="Google Satellite"
-            />
-            
-            {/* 🚀 NAYA SEARCH COMPONENT */}
-            <SearchField />
-            
-            <DrawTools setFarmCoords={setFarmCoords} />
-          </MapContainer>
+      {/* Main Content with top margin to showcase video */}
+      <div className="main-container" id="home">
+        <div className="spacer">
+           {/* Space to show the video */}
+           <h1>Scroll Down to Explore <br/>⬇️</h1>
         </div>
 
-        {/* RESULT BUTTON */}
-        <button 
-          onClick={checkHealth}
-          disabled={loading}
-          className="futuristic-btn"
-        >
-          {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
-        </button>
+        <div className="glass-card">
+          <h1 className="main-title">🌾 Kisan Space Tech</h1>
+          <p className="subtitle">
+            Map par apne khet ki boundary banayein aur live health check karein.
+          </p>
 
-        {/* AI REPORT CARD */}
-        {report && (
-          <div className="report-card">
-            <h2>📊 Asli Data Report</h2>
-            <p className="score-text">NDVI Score: <span>{report.score}</span></p>
-            <hr />
-            <h3>🤖 AI Health Analysis:</h3>
-            <p className="advice-text">{report.advice}</p>
+          <div className="map-wrapper">
+            <MapContainer center={mapCenter} zoom={13} style={{ height: '100%', width: '100%' }}>
+              <TileLayer
+                url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                attribution="Google Satellite"
+              />
+              <SearchField />
+              <DrawTools setFarmCoords={setFarmCoords} />
+            </MapContainer>
           </div>
-        )}
+
+          <button 
+            onClick={checkHealth}
+            disabled={loading}
+            className="futuristic-btn"
+          >
+            {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
+          </button>
+
+          {report && (
+            <div className="report-card">
+              <h2>📊 Asli Data Report</h2>
+              <p className="score-text">NDVI Score: <span>{report.score}</span></p>
+              <hr />
+              <h3>🤖 AI Health Analysis:</h3>
+              <p className="advice-text">{report.advice}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Blog Section */}
+        <div className="glass-card blog-section" id="blog">
+          <h2>About Kisan Space Tech & NDVI</h2>
+          <p><strong>English:</strong> NDVI measures crop health using satellite infrared data.</p>
+          <p><strong>Hindi:</strong> NDVI satellite data ka use karke fasal ki kheti aur swasthya ka pata lagata hai.</p>
+        </div>
+
+        {/* Footer / Contact */}
+        <footer className="glass-footer" id="contact">
+          <h3>Contact Details</h3>
+          <p>LinkedIn: <a href="https://linkedin.com/in/ayaanali9" target="_blank" rel="noopener noreferrer">ayaanali9</a></p>
+          <p>Email: <a href="mailto:ayaan@zuradocs.tech">ayaan@zuradocs.tech</a></p>
+        </footer>
 
       </div>
-    </div>
+    </>
   );
 }
 
