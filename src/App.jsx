@@ -7,6 +7,7 @@ import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 // Nayi Search Library Imports
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet-geosearch/dist/geosearch.css';
+import './App.css';
 
 // 1. NAYA COMPONENT: Search Box (Map ke upar)
 function SearchField() {
@@ -71,7 +72,7 @@ function App() {
     setReport(null);
 
     try {
-      // Tera live Colab API Link
+      // Tera live Render API Link
       const apiUrl = "https://geo-spatial-agritech.onrender.com/check_fasal";
       
       const response = await fetch(apiUrl, {
@@ -98,48 +99,54 @@ function App() {
   };
 
   return (
-    <div style={{ textAlign: 'center', fontFamily: 'sans-serif', padding: '20px', backgroundColor: '#f0fdf4', minHeight: '100vh' }}>
-      
-      <h1 style={{ color: '#166534', margin: '0 0 10px 0' }}>🌾 Kisan Space Tech</h1>
-      <p style={{ color: '#4b5563', marginBottom: '20px', fontSize: '18px' }}>
-        Map par apne khet ki boundary banayein aur live health check karein.
-      </p>
+    <div className="main-container">
+      {/* Background Video */}
+      <video autoPlay loop muted playsInline className="background-video">
+        <source src="/satellite-bg.mp4" type="video/mp4" />
+      </video>
 
-      {/* MAP BOX */}
-      <div style={{ height: '55vh', width: '90%', maxWidth: '800px', margin: '0 auto', border: '4px solid #22c55e', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 10px 15px rgba(0,0,0,0.1)' }}>
-        <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
-          <TileLayer
-            url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-            attribution="Google Satellite"
-          />
-          
-          {/* 🚀 NAYA SEARCH COMPONENT */}
-          <SearchField />
-          
-          <DrawTools setFarmCoords={setFarmCoords} />
-        </MapContainer>
-      </div>
+      <div className="glass-card">
+        <h1 className="main-title">🌾 Kisan Space Tech</h1>
+        <p className="subtitle">
+          Map par apne khet ki boundary banayein aur live health check karein.
+        </p>
 
-      {/* RESULT BUTTON */}
-      <button 
-        onClick={checkHealth}
-        disabled={loading}
-        style={{ marginTop: '25px', padding: '15px 40px', fontSize: '20px', fontWeight: 'bold', color: 'white', background: loading ? '#86efac' : '#22c55e', border: 'none', borderRadius: '8px', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.2)' }}
-      >
-        {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
-      </button>
-
-      {/* AI REPORT CARD */}
-      {report && (
-        <div style={{ marginTop: '30px', padding: '20px', maxWidth: '600px', margin: '30px auto', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', borderLeft: '8px solid #16a34a', textAlign: 'left' }}>
-          <h2 style={{ margin: '0 0 10px 0', color: '#15803d' }}>📊 Asli Data Report</h2>
-          <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#374151' }}>NDVI Score: <span style={{ color: '#047857' }}>{report.score}</span></p>
-          <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: '15px 0' }} />
-          <h3 style={{ margin: '0 0 5px 0', color: '#1f2937' }}>🤖 AI Health Analysis:</h3>
-          <p style={{ fontSize: '16px', color: '#4b5563', lineHeight: '1.5' }}>{report.advice}</p>
+        {/* MAP BOX */}
+        <div className="map-wrapper">
+          <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
+            <TileLayer
+              url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+              attribution="Google Satellite"
+            />
+            
+            {/* 🚀 NAYA SEARCH COMPONENT */}
+            <SearchField />
+            
+            <DrawTools setFarmCoords={setFarmCoords} />
+          </MapContainer>
         </div>
-      )}
 
+        {/* RESULT BUTTON */}
+        <button 
+          onClick={checkHealth}
+          disabled={loading}
+          className="futuristic-btn"
+        >
+          {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
+        </button>
+
+        {/* AI REPORT CARD */}
+        {report && (
+          <div className="report-card">
+            <h2>📊 Asli Data Report</h2>
+            <p className="score-text">NDVI Score: <span>{report.score}</span></p>
+            <hr />
+            <h3>🤖 AI Health Analysis:</h3>
+            <p className="advice-text">{report.advice}</p>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
