@@ -8,21 +8,22 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet-geosearch/dist/geosearch.css';
 import './App.css';
 
-// Navbar Component
+// top navigation bar with logo and page links
 function Navbar() {
   return (
     <nav className="glass-navbar">
       <div className="nav-logo">🌾 Kisan Space Tech</div>
       <ul className="nav-links">
         <li><a href="#home">Home</a></li>
-        <li><a href="#blog">Blog</a></li>
+        <li><a href="#map-section">Map</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   );
 }
 
-// 1. Search Box
+// search bar on the map so users can find any location
 function SearchField() {
   const map = useMap();
   
@@ -47,7 +48,7 @@ function SearchField() {
   return null;
 }
 
-// 2. Draw Tools
+// polygon draw tools for marking field boundaries
 function DrawTools({ setFarmCoords }) {
   const map = useMap();
   
@@ -68,9 +69,10 @@ function DrawTools({ setFarmCoords }) {
   return null;
 }
 
-// 3. Main App Component
+// main app
 function App() {
-  const mapCenter = [29.9695, 77.5510]; // Tajpura, Saharanpur
+  // Tajpura, Behat Road, Saharanpur — my village coordinates
+  const mapCenter = [29.967, 77.555];
   const [farmCoords, setFarmCoords] = useState(null);
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
@@ -85,13 +87,13 @@ function App() {
     setReport(null);
 
     try {
+      // render backend URL
       const apiUrl = "https://geo-spatial-agritech.onrender.com/check_fasal";
       
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Bypass-Tunnel-Reminder": "true" 
         },
         body: JSON.stringify({ geometry: farmCoords })
       });
@@ -104,7 +106,7 @@ function App() {
         alert("❌ Error: " + data.message);
       }
     } catch (error) {
-      alert("⚠️ API se connection nahi hua. Check kar Colab chal raha hai ya nahi.");
+      alert("⚠️ Backend se connection nahi ho paya. Thodi der baad try karo.");
       console.error(error);
     }
     setLoading(false);
@@ -112,29 +114,30 @@ function App() {
 
   return (
     <>
-      {/* Navbar */}
       <Navbar />
 
-      {/* Background Video (Fixed) */}
-      <video autoPlay loop muted playsInline className="background-video">
-        <source src="/satellite-bg.mp4" type="video/mp4" />
-      </video>
-
-      {/* Main Content with top margin to showcase video */}
-      <div className="main-container" id="home">
-        <div className="spacer">
-           {/* Space to show the video */}
-           <h1>Scroll Down to Explore <br/>⬇️</h1>
+      {/* hero section — satellite video plays as the landing screen */}
+      <section className="hero-section" id="home">
+        <video autoPlay loop muted playsInline className="hero-video">
+          <source src="/satellite-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-overlay">
+          <h1 className="hero-title">Kisan Space Tech</h1>
+          <p className="hero-subtitle">Satellite-based AI for Precision Agriculture</p>
+          <a href="#map-section" className="hero-btn">Explore Map ↓</a>
         </div>
+      </section>
 
+      {/* map section — the actual tool where user draws boundary and checks crop health */}
+      <section className="map-section" id="map-section">
         <div className="glass-card">
-          <h1 className="main-title">🌾 Kisan Space Tech</h1>
-          <p className="subtitle">
-            Map par apne khet ki boundary banayein aur live health check karein.
+          <h2 className="section-title">🛰️ Live Crop Health Scanner</h2>
+          <p className="section-desc">
+            Map par apne khet ki boundary banao aur satellite se real-time health check karo.
           </p>
 
           <div className="map-wrapper">
-            <MapContainer center={mapCenter} zoom={13} style={{ height: '100%', width: '100%' }}>
+            <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
               <TileLayer
                 url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
                 attribution="Google Satellite"
@@ -152,9 +155,10 @@ function App() {
             {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
           </button>
 
+          {/* NDVI report card — shows up after satellite analysis is done */}
           {report && (
             <div className="report-card">
-              <h2>📊 Asli Data Report</h2>
+              <h2>📊 Live Satellite Report</h2>
               <p className="score-text">NDVI Score: <span>{report.score}</span></p>
               <hr />
               <h3>🤖 AI Health Analysis:</h3>
@@ -162,22 +166,51 @@ function App() {
             </div>
           )}
         </div>
+      </section>
 
-        {/* Blog Section */}
-        <div className="glass-card blog-section" id="blog">
-          <h2>About Kisan Space Tech & NDVI</h2>
-          <p><strong>English:</strong> NDVI measures crop health using satellite infrared data.</p>
-          <p><strong>Hindi:</strong> NDVI satellite data ka use karke fasal ki kheti aur swasthya ka pata lagata hai.</p>
+      {/* footer — about, blog, contact in a clean bottom section like big websites */}
+      <footer className="site-footer">
+        <div className="footer-grid">
+
+          {/* about column */}
+          <div className="footer-col" id="about">
+            <h3>About</h3>
+            <p>Kisan Space Tech uses real-time Sentinel-2 satellite imagery and NDVI analysis to check crop health from space. Built for the farmers of Tajpura, Saharanpur and beyond.</p>
+            <p style={{marginTop: '8px', opacity: 0.7}}>NDVI (Normalized Difference Vegetation Index) infrared data se fasal ki sehat naapne ka tarika hai — jitna zyada hara, utni healthy fasal.</p>
+          </div>
+
+          {/* blog / how it works column */}
+          <div className="footer-col" id="blog">
+            <h3>How It Works</h3>
+            <ul>
+              <li>🛰️ Sentinel-2 satellite se latest image download hoti hai</li>
+              <li>🧠 NDVI algorithm se crop health score nikalta hai</li>
+              <li>📊 AI thresholds se report banti hai — Red, Orange, Yellow, Green</li>
+              <li>🌾 Tajpura, UP ke local soil conditions ke liye calibrated hai</li>
+            </ul>
+          </div>
+
+          {/* contact column */}
+          <div className="footer-col" id="contact">
+            <h3>Contact</h3>
+            <p>Built by <strong>Ayaan Ali</strong></p>
+            <p>📍 Tajpura, Behat Road, Saharanpur, UP</p>
+            <p style={{marginTop: '10px'}}>
+              <a href="https://linkedin.com/in/ayaanali9" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              {' • '}
+              <a href="mailto:ayaan@zuradocs.tech">ayaan@zuradocs.tech</a>
+            </p>
+            <p style={{marginTop: '5px'}}>
+              <a href="https://github.com/ayaanali9" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+          </div>
+
         </div>
 
-        {/* Footer / Contact */}
-        <footer className="glass-footer" id="contact">
-          <h3>Contact Details</h3>
-          <p>LinkedIn: <a href="https://linkedin.com/in/ayaanali9" target="_blank" rel="noopener noreferrer">ayaanali9</a></p>
-          <p>Email: <a href="mailto:ayaan@zuradocs.tech">ayaan@zuradocs.tech</a></p>
-        </footer>
-
-      </div>
+        <div className="footer-bottom">
+          <p>© 2026 Kisan Space Tech — Satellite AI for Indian Agriculture</p>
+        </div>
+      </footer>
     </>
   );
 }
