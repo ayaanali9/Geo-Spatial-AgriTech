@@ -7,21 +7,8 @@ import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet-geosearch/dist/geosearch.css';
 import './App.css';
-
-// top navigation bar with logo and page links
-function Navbar() {
-  return (
-    <nav className="glass-navbar">
-      <div className="nav-logo">🌾 Kisan Space Tech</div>
-      <ul className="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#map-section">Map</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  );
-}
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 // search bar on the map so users can find any location
 function SearchField() {
@@ -69,8 +56,8 @@ function DrawTools({ setFarmCoords }) {
   return null;
 }
 
-// main app
-function App() {
+// home page with hero video + interactive map
+function Home() {
   // Tajpura, Behat Road, Saharanpur — my village coordinates
   const mapCenter = [29.967, 77.555];
   const [farmCoords, setFarmCoords] = useState(null);
@@ -168,51 +155,9 @@ function App() {
         </div>
       </section>
 
-      {/* footer — about, blog, contact in a clean bottom section like big websites */}
-      <footer className="site-footer">
-        <div className="footer-grid">
-
-          {/* about column */}
-          <div className="footer-col" id="about">
-            <h3>About</h3>
-            <p>Kisan Space Tech uses real-time Sentinel-2 satellite imagery and NDVI analysis to check crop health from space. Built for the farmers of Tajpura, Saharanpur and beyond.</p>
-            <p style={{marginTop: '8px', opacity: 0.7}}>NDVI (Normalized Difference Vegetation Index) infrared data se fasal ki sehat naapne ka tarika hai — jitna zyada hara, utni healthy fasal.</p>
-          </div>
-
-          {/* blog / how it works column */}
-          <div className="footer-col" id="blog">
-            <h3>How It Works</h3>
-            <ul>
-              <li>🛰️ Sentinel-2 satellite se latest image download hoti hai</li>
-              <li>🧠 NDVI algorithm se crop health score nikalta hai</li>
-              <li>📊 AI thresholds se report banti hai — Red, Orange, Yellow, Green</li>
-              <li>🌾 Tajpura, UP ke local soil conditions ke liye calibrated hai</li>
-            </ul>
-          </div>
-
-          {/* contact column */}
-          <div className="footer-col" id="contact">
-            <h3>Contact</h3>
-            <p>Built by <strong>Ayaan Ali</strong></p>
-            <p>📍 Tajpura, Behat Road, Saharanpur, UP</p>
-            <p style={{marginTop: '10px'}}>
-              <a href="https://linkedin.com/in/ayaanali9" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              {' • '}
-              <a href="mailto:ayaan@zuradocs.tech">ayaan@zuradocs.tech</a>
-            </p>
-            <p style={{marginTop: '5px'}}>
-              <a href="https://github.com/ayaanali9" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </p>
-          </div>
-
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2026 Kisan Space Tech — Satellite AI for Indian Agriculture</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
 
-export default App;
+export default Home;
