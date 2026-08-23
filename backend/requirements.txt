@@ -2,4 +2,3 @@ flask
 flask-cors
 earthengine-api
 gunicorn
-geemap
