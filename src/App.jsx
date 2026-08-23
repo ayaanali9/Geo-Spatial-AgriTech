@@ -9,6 +9,15 @@ import 'leaflet-geosearch/dist/geosearch.css';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import WeatherAQI from './components/WeatherAQI';
+
+// average the polygon's ring coordinates to get a representative point for the field
+function getCentroid(geometry) {
+  if (!geometry?.coordinates?.length) return null;
+  const ring = geometry.coordinates[0];
+  const total = ring.reduce((acc, [lng, lat]) => ({ lat: acc.lat + lat, lng: acc.lng + lng }), { lat: 0, lng: 0 });
+  return { lat: total.lat / ring.length, lng: total.lng / ring.length };
+}
 
 // search bar on the map so users can find any location
 function SearchField() {
@@ -63,6 +72,7 @@ function Home() {
   const [farmCoords, setFarmCoords] = useState(null);
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
+  const centroid = getCentroid(farmCoords);
 
   const checkHealth = async () => {
     if (!farmCoords) {
@@ -152,6 +162,9 @@ function Home() {
               <p className="advice-text">{report.advice}</p>
             </div>
           )}
+
+          {/* weather + AQI for the drawn field's centroid */}
+          {centroid && <WeatherAQI lat={centroid.lat} lon={centroid.lng} />}
         </div>
       </section>
 
