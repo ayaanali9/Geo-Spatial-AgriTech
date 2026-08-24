@@ -93,30 +93,6 @@ function About() {
             </div>
           </div>
         </div>
-
-        <div className="content-card">
-          <h2>👨‍💻 About the Developer</h2>
-          <div className="dual-lang">
-            <div className="lang-block">
-              <span className="lang-tag">English</span>
-              <p>
-                This project was built by <strong>Ayaan Ali</strong>, a developer passionate 
-                about using technology to solve real-world problems in agriculture. The goal 
-                was to make satellite-based crop monitoring accessible to every farmer — not 
-                just large agribusinesses with expensive tools.
-              </p>
-            </div>
-            <div className="lang-block">
-              <span className="lang-tag">हिंदी</span>
-              <p>
-                यह प्रोजेक्ट <strong>अयान अली</strong> ने बनाया है, जो कृषि में वास्तविक 
-                समस्याओं को तकनीक से हल करने में रुचि रखते हैं। इसका उद्देश्य सैटेलाइट-आधारित 
-                फसल निगरानी को हर किसान तक पहुँचाना था — न कि सिर्फ़ बड़ी कृषि कंपनियों तक 
-                जिनके पास महँगे उपकरण हैं।
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
 
       <Footer />
