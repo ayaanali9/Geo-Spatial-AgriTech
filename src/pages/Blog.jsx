@@ -13,6 +13,15 @@ const articles = [
     date: "April 2026"
   },
   {
+    id: 5,
+    title: "The 'Pond Bug' and How We Fixed It with MNDWI",
+    titleHi: "तालाब की काई और MNDWI का जादुई फिक्स",
+    content: `While testing the app in my village, I ran into a really funny but serious issue. The AI told me to add fertilizer to a local pond! It turns out, the satellite's NDVI sensor gets confused by the green algae floating on the water and thinks it's a healthy crop. If we are going to rely on this data for real farming, it has to be 100% accurate. So, I dug deeper into remote sensing research and implemented something called MNDWI (Modified Normalized Difference Water Index). It uses infrared bands to easily spot water bodies. Now, our system is smart enough to know the difference between a green field and a green pond, making the crop advice completely reliable.`,
+    contentHi: `अपने गाँव में इस ऐप को टेस्ट करते समय मुझे एक बड़ी मज़ेदार लेकिन ज़रूरी दिक्कत मिली। हमारा AI मुझे गाँव के एक तालाब में यूरिया डालने की सलाह दे रहा था! हुआ ये कि पानी के ऊपर जमी हरी काई को सैटेलाइट का NDVI सेंसर हरी फसल समझ बैठा था। किसानों के लिए यह डेटा बिल्कुल सटीक होना चाहिए, इसलिए मैंने रिसर्च करके इसमें MNDWI तकनीक जोड़ दी। यह इन्फ्रारेड किरणों का इस्तेमाल करके पानी को तुरंत पहचान लेती है। अब हमारा AI इतना समझदार है कि वो हरे खेत और हरे तालाब के बीच का फर्क आसानी से पकड़ लेता है, जिससे किसानों को एकदम सही जानकारी मिलती है।`,
+    emoji: "💧",
+    date: "August 2026"
+  },
+  {
     id: 2,
     title: "Sentinel-2: The Satellite That Watches Over Indian Fields",
     titleHi: "सेंटिनल-2: वह उपग्रह जो भारतीय खेतों की निगरानी करता है",

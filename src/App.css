@@ -617,3 +617,38 @@ html, body, #root {
     padding: 14px 18px;
   }
 }
+
+/* ── leaflet-geosearch: fix invisible white-on-white result text ── */
+.leaflet-control-geosearch form {
+  background: #ffffff;
+}
+
+.leaflet-control-geosearch .results.active {
+  background: #ffffff;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.leaflet-control-geosearch .results > * {
+  color: #333;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 8px 10px;
+}
+
+.leaflet-control-geosearch .results > *:hover,
+.leaflet-control-geosearch .results > *.active {
+  color: #111;
+  background: #e6f7ef;
+  cursor: pointer;
+}
+
+.leaflet-control-geosearch input.glass {
+  background: #ffffff;
+  color: #333;
+}
+
+.leaflet-control-geosearch input.glass::placeholder {
+  color: #666;
+}

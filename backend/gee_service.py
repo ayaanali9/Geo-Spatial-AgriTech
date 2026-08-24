@@ -23,6 +23,10 @@ NDVI_THRESHOLDS = [
 ]
 NDVI_HEALTHY_LABEL = ("green", "Excellent", "Fasal ekdum top class aur healthy hai!")
 
+# MNDWI > this threshold indicates the ROI is water (algae-covered ponds
+# inflate NDVI, so water must be ruled out before trusting the NDVI advice)
+MNDWI_WATER_THRESHOLD = 0.0
+
 # SCL classes to exclude: 3 = cloud shadow, 8/9 = cloud medium/high probability,
 # 10 = thin cirrus, 11 = snow/ice
 SCL_MASKED_CLASSES = [3, 8, 9, 10, 11]
@@ -81,8 +85,9 @@ def analyze_field(geometry):
 
     clear_image = _mask_clouds_and_snow(latest_image)
     latest_ndvi = clear_image.normalizedDifference(['B8', 'B4']).rename('NDVI')
+    latest_mndwi = clear_image.normalizedDifference(['B3', 'B11']).rename('MNDWI')
 
-    stats = latest_ndvi.reduceRegion(
+    stats = latest_ndvi.addBands(latest_mndwi).reduceRegion(
         reducer=ee.Reducer.mean(),
         geometry=roi,
         scale=10,
@@ -90,13 +95,19 @@ def analyze_field(geometry):
     ).getInfo()
 
     raw_score = stats.get('NDVI')
+    raw_mndwi = stats.get('MNDWI')
 
-    if raw_score is None:
+    if raw_score is None or raw_mndwi is None:
         return {"status": "error", "message": "Satellite data unavailable due to heavy cloud cover."}
 
     score = round(raw_score, 2)
+    mndwi_score = round(raw_mndwi, 2)
+    is_water = mndwi_score > MNDWI_WATER_THRESHOLD
+
     return {
         "status": "success",
         "score": score,
-        "advice": _classify_ndvi(score)
+        "mndwi": mndwi_score,
+        "is_water": is_water,
+        "advice": "Water Body Detected (MNDWI > 0). Crop analysis is not applicable here." if is_water else _classify_ndvi(score)
     }

@@ -136,7 +136,7 @@ function Home() {
           <div className="map-wrapper">
             <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
               <TileLayer
-                url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
                 attribution="Google Satellite"
               />
               <SearchField />
@@ -159,7 +159,11 @@ function Home() {
               <p className="score-text">NDVI Score: <span>{report.score}</span></p>
               <hr />
               <h3>🤖 AI Health Analysis:</h3>
-              <p className="advice-text">{report.advice}</p>
+              {report.is_water ? (
+                <p className="advice-text">💧 Water Body Detected (MNDWI &gt; 0). Crop analysis is not applicable here.</p>
+              ) : (
+                <p className="advice-text">{report.advice}</p>
+              )}
             </div>
           )}
 
