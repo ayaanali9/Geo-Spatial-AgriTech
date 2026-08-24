@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import '@geoman-io/leaflet-geoman-free';
@@ -47,7 +47,8 @@ function SearchField() {
 // polygon draw tools for marking field boundaries
 function DrawTools({ setFarmCoords }) {
   const map = useMap();
-  
+  const activeLayerRef = useRef(null);
+
   useEffect(() => {
     map.pm.addControls({
       position: 'topleft',
@@ -57,6 +58,12 @@ function DrawTools({ setFarmCoords }) {
     });
 
     map.on('pm:create', (e) => {
+      // only one active polygon at a time — remove the previous one before storing the new one
+      if (activeLayerRef.current) {
+        map.removeLayer(activeLayerRef.current);
+      }
+      activeLayerRef.current = e.layer;
+
       const geojson = e.layer.toGeoJSON();
       setFarmCoords(geojson.geometry);
     });
