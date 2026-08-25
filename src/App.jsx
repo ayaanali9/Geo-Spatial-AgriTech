@@ -156,7 +156,7 @@ function Home() {
             disabled={loading}
             className="futuristic-btn"
           >
-            {loading ? "⏳ Satellite data nikal raha hai..." : "Analyze Crop Health 🚀"}
+            {loading ? "⏳ Fetching live satellite data..." : "Analyze Crop Health 🚀"}
           </button>
 
           {/* NDVI report card — shows up after satellite analysis is done */}
