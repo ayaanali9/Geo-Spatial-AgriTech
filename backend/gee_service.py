@@ -18,7 +18,7 @@ SENTINEL2_COLLECTION = 'COPERNICUS/S2_SR_HARMONIZED'
 # NDVI health thresholds tuned for local (UP) agricultural patterns
 NDVI_THRESHOLDS = [
     (0.2, "red", "Barren Land", "The area appears empty or barren."),
-    (0.6, "yellow", "Needs Attention", "Crop greenness is low, apply water/urea. (फसल में हरा-पन कम है, पानी/यूरिया डालो। / Fasal mein hara-pan kam hai, paani/urea dalo.)"),
+    (0.6, "yellow", "Needs Attention", "Crop greenness is low, apply water/urea. (Fasal mein hara-pan kam hai, paani/urea dalo.)"),
 ]
 NDVI_HEALTHY_LABEL = ("green", "Excellent", "The crop is highly healthy and dense.")
 
