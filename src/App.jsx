@@ -34,7 +34,7 @@ function SearchField() {
       retainZoomLevel: false,
       animateZoom: true,
       keepResult: false,
-      searchLabel: '🔍 Gaon, Shehar ya Pin Code dhoondhein...' 
+      searchLabel: '🔍 Search Village, City, or Pincode...' 
     });
 
     map.addControl(searchControl);
@@ -83,7 +83,7 @@ function Home() {
 
   const checkHealth = async () => {
     if (!farmCoords) {
-      alert("⚠️ Pehle map par apne khet ki boundary draw karein!");
+      alert("⚠️ Please draw your field boundary on the map first!");
       return;
     }
 
@@ -156,7 +156,7 @@ function Home() {
             disabled={loading}
             className="futuristic-btn"
           >
-            {loading ? "⏳ Satellite data nikal raha hai..." : "Fasal Check Karein 🚀"}
+            {loading ? "⏳ Satellite data nikal raha hai..." : "Analyze Crop Health 🚀"}
           </button>
 
           {/* NDVI report card — shows up after satellite analysis is done */}
