@@ -39,5 +39,19 @@ def check_fasal():
         return jsonify({"status": "error", "message": "Backend error — check server logs for details."})
 
 
+@app.route('/api/live-rgb', methods=['POST'])
+def live_rgb():
+    try:
+        data = request.get_json()
+        geometry = data['geometry']
+
+        tile_url = gee_service.get_live_rgb_tile(geometry)
+        return jsonify({"status": "success", "tile_url": tile_url})
+
+    except Exception as e:
+        print("Live RGB Error Details:", str(e))
+        return jsonify({"status": "error", "message": "Could not fetch live satellite imagery — check server logs for details."})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT)

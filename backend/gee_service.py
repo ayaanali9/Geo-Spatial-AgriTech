@@ -14,6 +14,7 @@ from google.oauth2 import service_account
 
 GEE_PROJECT_ID = 'gen-lang-client-0942350792'
 SENTINEL2_COLLECTION = 'COPERNICUS/S2_SR_HARMONIZED'
+LIVE_RGB_COLLECTION = 'COPERNICUS/S2_HARMONIZED'
 
 # NDVI health thresholds tuned for local (UP) agricultural patterns
 NDVI_THRESHOLDS = [
@@ -110,3 +111,26 @@ def analyze_field(geometry):
         "is_water": is_water,
         "advice": "Water Body Detected (MNDWI > 0). Crop analysis is not applicable here." if is_water else _classify_ndvi(score)
     }
+
+
+def get_live_rgb_tile(geometry):
+    """
+    Fetch a live true-color (RGB) tile URL for the most recent cloud-free
+    Sentinel-2 image covering the given field boundary.
+
+    Args:
+        geometry: GeoJSON geometry dict (e.g. a Polygon) drawn by the user.
+
+    Returns:
+        The XYZ tile URL template (str) for the true-color image.
+    """
+    roi = ee.Geometry(geometry)
+
+    latest_image = ee.ImageCollection(LIVE_RGB_COLLECTION) \
+        .filterBounds(roi) \
+        .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 30)) \
+        .sort('system:time_start', False) \
+        .first()
+
+    map_id = latest_image.getMapId({'bands': ['B4', 'B3', 'B2'], 'min': 0, 'max': 3000})
+    return map_id['tile_fetcher'].url_format
