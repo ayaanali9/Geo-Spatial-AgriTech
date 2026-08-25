@@ -17,10 +17,10 @@ SENTINEL2_COLLECTION = 'COPERNICUS/S2_SR_HARMONIZED'
 
 # NDVI health thresholds tuned for local (UP) agricultural patterns
 NDVI_THRESHOLDS = [
-    (0.2, "red", "Barren Land", "The area appears empty or barren."),
+    (0.2, "red", "Barren Land", "The area appears empty or barren. (Zameen khali ya banjar lag rahi hai.)"),
     (0.6, "yellow", "Needs Attention", "Crop greenness is low, apply water/urea. (Fasal mein hara-pan kam hai, paani/urea dalo.)"),
 ]
-NDVI_HEALTHY_LABEL = ("green", "Excellent", "The crop is highly healthy and dense.")
+NDVI_HEALTHY_LABEL = ("green", "Excellent", "The crop is highly healthy and dense. (Fasal ekdum swasth aur ghani hai.)")
 
 # MNDWI > this threshold indicates the ROI is water (algae-covered ponds
 # inflate NDVI, so water must be ruled out before trusting the NDVI advice)
