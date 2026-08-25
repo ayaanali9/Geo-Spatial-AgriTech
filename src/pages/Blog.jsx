@@ -22,6 +22,24 @@ const articles = [
     date: "August 2026"
   },
   {
+    id: 6,
+    title: "AI vs. The Concrete Jungle: Why Houses Score Low",
+    titleHi: "AI और कंक्रीट के जंगल: घरों का स्कोर कम क्यों आया?",
+    content: `I decided to test the AI on a row of houses in a city. It returned a low NDVI score, classifying the area as "Barren Land." At first, I thought my code was broken. But then it hit me: the AI is doing exactly what it's supposed to do! Roofs, concrete, and asphalt don't have chlorophyll. To a satellite, a concrete building reflects light just like a barren rock. It proved our agricultural model is smart enough to filter out non-vegetated urban areas.`,
+    contentHi: `मैंने शहर के कुछ घरों पर AI को टेस्ट किया। उसने स्कोर बहुत कम दिया और उसे "बंजर ज़मीन" बता दिया। मुझे लगा मेरा कोड खराब हो गया है! लेकिन फिर समझ आया कि AI बिल्कुल सही काम कर रहा है। छतों और कंक्रीट में क्लोरोफिल नहीं होता, इसलिए सैटेलाइट के लिए वो बंजर पत्थर के समान हैं। इससे साबित हो गया कि हमारा मॉडल शहरी और कंक्रीट वाले इलाकों को आसानी से पहचान कर अलग कर सकता है।`,
+    emoji: "🏙️",
+    date: "August 2026"
+  },
+  {
+    id: 7,
+    title: "The Time Travel Illusion: Google Maps vs. Live AI",
+    titleHi: "'टाइम ट्रेवल' इल्यूज़न: Google Maps बनाम हमारा लाइव AI",
+    content: `While testing a field in my village that looked lush and green on the map, the AI confidently told me it was "empty or barren." How could that be? It turns out, we stumbled upon the "Time Travel" illusion of remote sensing. The Google Maps satellite layer we use for drawing boundaries is often 1 to 3 years old. However, our backend uses Sentinel-2 data that is updated every 5 days! The AI wasn't wrong; the field had recently been plowed in real life. Our AI sees the present, while the base map shows the past.`,
+    contentHi: `गाँव के एक खेत को चेक करते समय, जो मैप पर बिल्कुल हरा-भरा दिख रहा था, AI ने कहा कि ज़मीन "खाली या बंजर" है। मैं हैरान था! लेकिन फिर मुझे रिमोट सेंसिंग के 'टाइम ट्रेवल' का सच पता चला। दरअसल, बाउंड्री बनाने के लिए हम जो Google Satellite मैप देखते हैं, उसकी फोटो 1-3 साल पुरानी होती है। दूसरी तरफ, हमारा AI हर 5 दिन में अपडेट होने वाले Sentinel-2 का लाइव डेटा इस्तेमाल करता है। असलियत में वो खेत उस दिन खाली और जुता हुआ था। हमारा AI आज का सच देख रहा था, जबकि मैप हमें बीता हुआ कल दिखा रहा था!`,
+    emoji: "⏳",
+    date: "August 2026"
+  },
+  {
     id: 2,
     title: "Sentinel-2: The Satellite That Watches Over Indian Fields",
     titleHi: "सेंटिनल-2: वह उपग्रह जो भारतीय खेतों की निगरानी करता है",
