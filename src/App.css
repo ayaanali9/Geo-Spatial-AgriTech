@@ -213,39 +213,6 @@ html, body, #root {
   transform: none;
 }
 
-/* toggle for the live Sentinel-2 RGB overlay */
-.satellite-toggle-btn {
-  margin-top: 18px;
-  padding: 12px 32px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #e5e7eb;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-.satellite-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
-}
-
-.satellite-toggle-btn.active {
-  color: white;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(37, 99, 235, 0.85) 100%);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.45);
-}
-
-.satellite-toggle-btn:disabled {
-  background: rgba(107, 114, 128, 0.45);
-  cursor: not-allowed;
-  transform: none;
-}
-
 /* NDVI report card */
 .report-card {
   margin-top: 32px;

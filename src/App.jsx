@@ -79,8 +79,6 @@ function Home() {
   const [farmCoords, setFarmCoords] = useState(null);
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
-  const [liveRgbUrl, setLiveRgbUrl] = useState(null);
-  const [liveRgbLoading, setLiveRgbLoading] = useState(false);
   const centroid = getCentroid(farmCoords);
 
   const checkHealth = async () => {
@@ -118,45 +116,6 @@ function Home() {
     setLoading(false);
   };
 
-  const toggleLiveSatellite = async () => {
-    // toggling off just removes the overlay, revealing the Google base map again
-    if (liveRgbUrl) {
-      setLiveRgbUrl(null);
-      return;
-    }
-
-    if (!farmCoords) {
-      alert("⚠️ Pehle map par apne khet ki boundary draw karein!");
-      return;
-    }
-
-    setLiveRgbLoading(true);
-
-    try {
-      const apiUrl = "https://geo-spatial-agritech.onrender.com/api/live-rgb";
-
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ geometry: farmCoords })
-      });
-
-      const data = await response.json();
-
-      if (data.status === "success") {
-        setLiveRgbUrl(data.tile_url);
-      } else {
-        alert("❌ Error: " + data.message);
-      }
-    } catch (error) {
-      alert("⚠️ Backend se connection nahi ho paya. Thodi der baad try karo.");
-      console.error(error);
-    }
-    setLiveRgbLoading(false);
-  };
-
   return (
     <>
       <Navbar />
@@ -187,25 +146,10 @@ function Home() {
                 url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
                 attribution="Google Satellite"
               />
-              {liveRgbUrl && (
-                <TileLayer url={liveRgbUrl} attribution="Sentinel-2 (Live)" />
-              )}
               <SearchField />
               <DrawTools setFarmCoords={setFarmCoords} />
             </MapContainer>
           </div>
-
-          <button
-            onClick={toggleLiveSatellite}
-            disabled={liveRgbLoading}
-            className={`satellite-toggle-btn ${liveRgbUrl ? 'active' : ''}`}
-          >
-            {liveRgbLoading
-              ? "⏳ Live tiles la rahe hain..."
-              : liveRgbUrl
-                ? "🛰️ Live Satellite ON (10m Res)"
-                : "🛰️ Live Satellite (10m Res)"}
-          </button>
 
           <button 
             onClick={checkHealth}
