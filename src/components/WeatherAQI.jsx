@@ -98,8 +98,10 @@ function WeatherAQI({ lat, lon }) {
 
           <div className="weather-stat aqi-stat" style={{ '--aqi-color': aqiInfo?.color ?? '#9ca3af' }}>
             <span className="weather-stat-icon">🫁</span>
-            <span className="weather-stat-value">{aqiInfo?.label ?? 'N/A'}</span>
-            <span className="weather-stat-label">Air Quality (AQI {aqi.main.aqi})</span>
+            <span className="weather-stat-value">
+              {aqiInfo ? `${aqiInfo.label} (Index ${aqi.main.aqi}/5)` : 'N/A'}
+            </span>
+            <span className="weather-stat-label">Air Quality Index (1=Good, 5=Very Poor)</span>
           </div>
         </div>
       )}
