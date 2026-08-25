@@ -477,7 +477,18 @@ html, body, #root {
   font-weight: 500;
 }
 
-/* contact page */
+/* contact page — research team profile grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.team-card {
+  margin-bottom: 0;
+}
+
 .contact-card {
   text-align: center;
 }
@@ -615,6 +626,10 @@ html, body, #root {
 
   .contact-link-item {
     padding: 14px 18px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
   }
 }
 
