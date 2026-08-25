@@ -17,11 +17,10 @@ SENTINEL2_COLLECTION = 'COPERNICUS/S2_SR_HARMONIZED'
 
 # NDVI health thresholds tuned for local (UP) agricultural patterns
 NDVI_THRESHOLDS = [
-    (0.2, "red", "Banjar ya Paani", "Zameen khali ya banjar hai."),
-    (0.4, "orange", "Khet Khali Hai", "Fasal kat chuki hai ya bhot choti hai."),
-    (0.65, "yellow", "Needs Attention", "Fasal mein hara-pan kam hai, paani/urea dalo."),
+    (0.2, "red", "Barren Land", "The area appears empty or barren."),
+    (0.6, "yellow", "Needs Attention", "Crop greenness is low, apply water/urea. (फसल में हरा-पन कम है, पानी/यूरिया डालो। / Fasal mein hara-pan kam hai, paani/urea dalo.)"),
 ]
-NDVI_HEALTHY_LABEL = ("green", "Excellent", "Fasal ekdum top class aur healthy hai!")
+NDVI_HEALTHY_LABEL = ("green", "Excellent", "The crop is highly healthy and dense.")
 
 # MNDWI > this threshold indicates the ROI is water (algae-covered ponds
 # inflate NDVI, so water must be ruled out before trusting the NDVI advice)
@@ -50,7 +49,7 @@ def _classify_ndvi(score):
     """Map an NDVI score to a status emoji/label/advice string."""
     for threshold, emoji_color, status, message in NDVI_THRESHOLDS:
         if score < threshold:
-            emoji = {"red": "🔴", "orange": "🟠", "yellow": "🟡"}[emoji_color]
+            emoji = {"red": "🔴", "yellow": "🟡"}[emoji_color]
             return f"{emoji} {status}: {message}"
     emoji_color, status, message = NDVI_HEALTHY_LABEL
     return f"🟢 {status}: {message}"
