@@ -25,6 +25,11 @@ def home():
     return f"🚀 Kisan Space Tech API is Live on Port {PORT}!"
 
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "ok"}), 200
+
+
 @app.route('/check_fasal', methods=['POST'])
 def check_fasal():
     try:
