@@ -2,3 +2,7 @@ flask
 flask-cors
 earthengine-api
 gunicorn
+joblib==1.5.3
+pandas==3.0.3
+xgboost==3.4.1
+scikit-learn==1.9.0
