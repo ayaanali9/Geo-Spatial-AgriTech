@@ -20,7 +20,7 @@ function getCentroid(geometry) {
 }
 
 // single Flask backend serving all API routes (check_fasal, live-rgb, predict_crop)
-const API_BASE_URL = "http://127.0.0.1:5000";
+const API_BASE_URL = "https://geo-spatial-agritech.onrender.com";
 
 // human-friendly labels for the Model M4 feature breakdown
 const M4_FEATURE_LABELS = {
@@ -135,7 +135,7 @@ function Home() {
         alert("❌ Error: " + data.message);
       }
     } catch (error) {
-      alert("⚠️ Backend se connection nahi ho paya. Thodi der baad try karo.");
+      alert("⚠️ Unable to connect to the backend server. Please try again later.");
       console.error(error);
     }
     setLoading(false);
@@ -168,7 +168,7 @@ function Home() {
         alert("❌ Error: " + data.message);
       }
     } catch (error) {
-      alert("⚠️ Backend se connection nahi ho paya. Thodi der baad try karo.");
+      alert("⚠️ Unable to connect to the backend server. Please try again later.");
       console.error(error);
     }
     setCropLoading(false);
