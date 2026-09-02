@@ -22,17 +22,20 @@ function getCentroid(geometry) {
 // single Flask backend serving all API routes (check_fasal, live-rgb, predict_crop)
 const API_BASE_URL = "https://geo-spatial-agritech.onrender.com";
 
-// human-friendly labels for the Model M4 feature breakdown
+// human-friendly labels + plain-language tooltips (for farmers unfamiliar with remote-sensing jargon)
 const M4_FEATURE_LABELS = {
-  NDVI: { label: "NDVI (Vegetation)", group: "Spectral" },
-  MNDWI: { label: "MNDWI (Water Mask)", group: "Spectral" },
-  elevation: { label: "Elevation (m)", group: "Terrain" },
-  slope: { label: "Slope (°)", group: "Terrain" },
-  aspect: { label: "Aspect (°)", group: "Terrain" },
-  clay: { label: "Clay Content", group: "SoilGrids" },
-  sand: { label: "Sand Content", group: "SoilGrids" },
-  soc: { label: "Soil Organic Carbon", group: "SoilGrids" },
-  bdod: { label: "Bulk Density", group: "SoilGrids" },
+  NDVI: { label: "NDVI (Vegetation)", group: "Spectral", tooltip: "Crop Health / Greenness (Fasal ki Hariyali)" },
+  EVI: { label: "EVI (Canopy)", group: "Spectral", tooltip: "Dense Canopy Health (Ghani Fasal ki Hariyali)" },
+  SAVI: { label: "SAVI (Soil-Adjusted)", group: "Spectral", tooltip: "Soil-Adjusted Health (Mitti ke asar ke bina Hariyali)" },
+  MNDWI: { label: "MNDWI (Water Mask)", group: "Spectral", tooltip: "Water / Moisture Presence (Paani/Nami ki Matra)" },
+  NDTI: { label: "NDTI (Tillage)", group: "Spectral", tooltip: "Crop Residue / Tillage (Sookhi Fasal ya Jutai)" },
+  elevation: { label: "Elevation (m)", group: "Terrain", tooltip: "Height above sea level (Zameen ki Unchai)" },
+  slope: { label: "Slope (°)", group: "Terrain", tooltip: "Land steepness and direction (Zameen ki Dhalan aur Disha)" },
+  aspect: { label: "Aspect (°)", group: "Terrain", tooltip: "Land steepness and direction (Zameen ki Dhalan aur Disha)" },
+  clay: { label: "Clay Content", group: "SoilGrids", tooltip: "Soil Texture (Mitti ka Prakar)" },
+  sand: { label: "Sand Content", group: "SoilGrids", tooltip: "Soil Texture (Mitti ka Prakar)" },
+  soc: { label: "Soil Organic Carbon", group: "SoilGrids", tooltip: "Soil Fertility / Nutrition (Mitti ka Poshan)" },
+  bdod: { label: "Bulk Density", group: "SoilGrids", tooltip: "Soil Compactness (Mitti ka Kasav)" },
 };
 
 // search bar on the map so users can find any location
@@ -256,9 +259,12 @@ function Home() {
                 {Object.entries(cropResult.features).map(([key, value]) => {
                   const meta = M4_FEATURE_LABELS[key] || { label: key, group: "Other" };
                   return (
-                    <div className="feature-item" key={key}>
+                    <div className="feature-item" key={key} title={meta.tooltip}>
                       <span className="feature-group">{meta.group}</span>
-                      <span className="feature-label">{meta.label}</span>
+                      <span className="feature-label">
+                        {meta.label}
+                        {meta.tooltip && <span className="feature-info-icon" title={meta.tooltip}>ℹ️</span>}
+                      </span>
                       <span className="feature-value">
                         {typeof value === "number" ? value.toFixed(3) : String(value)}
                       </span>
