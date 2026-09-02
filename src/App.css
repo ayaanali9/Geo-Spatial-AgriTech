@@ -311,9 +311,10 @@ html, body, #root {
   margin-bottom: 2px;
 }
 
-.feature-label {
-  font-size: 0.85rem;
-  color: #9ca3af;
+.feature-verdict {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f3f4f6;
   margin-bottom: 4px;
 }
 
@@ -323,10 +324,9 @@ html, body, #root {
   cursor: help;
 }
 
-.feature-value {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #f3f4f6;
+.feature-raw {
+  font-size: 0.8rem;
+  color: #9ca3af;
 }
 
 /* live weather + AQI card */

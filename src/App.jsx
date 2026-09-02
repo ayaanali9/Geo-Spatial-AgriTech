@@ -38,6 +38,50 @@ const M4_FEATURE_LABELS = {
   bdod: { label: "Bulk Density", group: "SoilGrids", tooltip: "Soil Compactness (Mitti ka Kasav)" },
 };
 
+// qualitative threshold classifiers (agronomist-provided) — turn raw scientific values into farmer-friendly labels
+function classifyNDVI(ndvi) {
+  if (ndvi < 0.20) return { label: "Sparse / Dry (Sookha)", tag: "🔴" };
+  if (ndvi < 0.50) return { label: "Moderate (Theek-Thak)", tag: "🟡" };
+  if (ndvi < 0.70) return { label: "Healthy (Hara-Bhara)", tag: "🟢" };
+  return { label: "Very Dense (Ghani Fasal)", tag: "🟢" };
+}
+function classifyEVI(evi) {
+  if (evi < 0.15) return { label: "Sparse / Dry (Sookha)", tag: "🔴" };
+  if (evi < 0.35) return { label: "Moderate (Theek-Thak)", tag: "🟡" };
+  if (evi < 0.55) return { label: "Healthy (Hara-Bhara)", tag: "🟢" };
+  return { label: "Very Dense (Ghani Fasal)", tag: "🟢" };
+}
+function classifyMNDWI(mndwi) {
+  if (mndwi < 0.00) return { label: "Dry (Sookha)", tag: "🔴" };
+  if (mndwi <= 0.20) return { label: "Moist / Wet (Nami)", tag: "🟡" };
+  return { label: "Flooded (Paani Bhara Hai)", tag: "🔵" };
+}
+function classifySlope(degrees) {
+  if (degrees <= 3) return { label: "Flat (Samtal)", tag: "🟢" };
+  if (degrees <= 8) return { label: "Gentle (Halki Dhalan)", tag: "🟡" };
+  return { label: "Steep (Pahadi)", tag: "🔴" };
+}
+function classifyBulkDensityCgCm3(bd) {
+  if (bd < 120) return { label: "Loose (Bhur-bhuri)", tag: "🟡" };
+  if (bd <= 160) return { label: "Optimal (Behtareen)", tag: "🟢" };
+  return { label: "Compact (Sakht)", tag: "🔴" };
+}
+function classifySOC(socDgKg) {
+  if (socDgKg < 50) return { label: "Low (Kam Poshan)", tag: "🔴" };
+  if (socDgKg <= 75) return { label: "Medium (Theek Poshan)", tag: "🟡" };
+  return { label: "High (Zabardast Poshan)", tag: "🟢" };
+}
+
+// maps a feature key to its classifier, if one exists — features without one just show the raw value
+const M4_FEATURE_CLASSIFIERS = {
+  NDVI: classifyNDVI,
+  EVI: classifyEVI,
+  MNDWI: classifyMNDWI,
+  slope: classifySlope,
+  bdod: classifyBulkDensityCgCm3,
+  soc: classifySOC,
+};
+
 // search bar on the map so users can find any location
 function SearchField() {
   const map = useMap();
@@ -258,16 +302,26 @@ function Home() {
               <div className="feature-grid">
                 {Object.entries(cropResult.features).map(([key, value]) => {
                   const meta = M4_FEATURE_LABELS[key] || { label: key, group: "Other" };
+                  const classifier = M4_FEATURE_CLASSIFIERS[key];
+                  const verdict = classifier && typeof value === "number" ? classifier(value) : null;
+                  const rawText = typeof value === "number" ? value.toFixed(3) : String(value);
                   return (
                     <div className="feature-item" key={key} title={meta.tooltip}>
                       <span className="feature-group">{meta.group}</span>
-                      <span className="feature-label">
-                        {meta.label}
-                        {meta.tooltip && <span className="feature-info-icon" title={meta.tooltip}>ℹ️</span>}
-                      </span>
-                      <span className="feature-value">
-                        {typeof value === "number" ? value.toFixed(3) : String(value)}
-                      </span>
+                      {verdict ? (
+                        <>
+                          <span className="feature-verdict">{verdict.tag} {verdict.label}</span>
+                          <span className="feature-raw">{meta.label}: {rawText}</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="feature-verdict">{rawText}</span>
+                          <span className="feature-raw">
+                            {meta.label}
+                            {meta.tooltip && <span className="feature-info-icon" title={meta.tooltip}>ℹ️</span>}
+                          </span>
+                        </>
+                      )}
                     </div>
                   );
                 })}
