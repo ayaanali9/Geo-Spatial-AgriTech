@@ -213,6 +213,18 @@ html, body, #root {
   transform: none;
 }
 
+/* Model M4 "Analyze Crop with AI" button */
+.ai-btn {
+  margin-top: 14px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.85) 0%, rgba(139, 92, 246, 0.85) 100%);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.45);
+}
+
+.ai-btn:hover {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 0 35px rgba(139, 92, 246, 0.8);
+}
+
 /* NDVI report card */
 .report-card {
   margin-top: 32px;
@@ -258,6 +270,57 @@ html, body, #root {
   font-size: 1rem;
   color: #d1d5db;
   line-height: 1.7;
+}
+
+/* Model M4 crop prediction card */
+.crop-card h2 {
+  color: #c4b5fd;
+}
+
+.crop-predicted {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f3f4f6;
+}
+
+.crop-predicted span {
+  color: #a78bfa;
+  font-size: 1.45rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.feature-group {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a78bfa;
+  margin-bottom: 2px;
+}
+
+.feature-label {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.feature-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f3f4f6;
 }
 
 /* live weather + AQI card */
