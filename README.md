@@ -144,12 +144,6 @@ ML + Agricultural Insights
 - Scikit-learn
 - Matplotlib
 
-### Deployment
-
-- Vercel — frontend
-- Render — backend
-- Uptime monitoring for backend availability
-
 ## Repository Structure
 
 ```text
