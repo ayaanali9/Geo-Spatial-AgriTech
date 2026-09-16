@@ -126,9 +126,15 @@ ML + Agricultural Insights
 ### Backend & Processing
 
 - Python
-- Flask
-- Google Earth Engine Python API
+- Flask — backend/API framework
+- Google Earth Engine Python API — satellite data processing
 - REST APIs
+
+### Deployment
+
+- Vercel — frontend deployment
+- Render — backend deployment
+- Uptime monitoring — backend availability
 
 ### Machine Learning & Data Science
 
